@@ -3,12 +3,9 @@ kind: ScaledObject
 metadata:
   name: kafka-consumer-scaler
   namespace: kafka
-  labels:
-    deploymentName: kafka-consumer
 spec:
   scaleTargetRef:
     deploymentName: kafka-consumer
-  cooldownPeriod: 120
   triggers:
   - type: kafka
     metadata:
