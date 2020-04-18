@@ -33,18 +33,22 @@ Provision an Apache Kafka cluster:
 
 ```shell
 export STRIMZI_VERSION=0.17.0
-kubectl apply -f https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/${STRIMZI_VERSION}/examples/kafka/kafka-persistent-single.yaml -n kafka
+kubectl apply -f https://raw.githubusercontent.com/strimzi/strimzi-kafka-operator/${STRIMZI_VERSION}/examples/kafka/kafka-persistent.yaml -n kafka
 ```
 
-An Apache Kafka cluster with just one ZooKeeper node and one Kafka broker is up and running in the `kafka` namespace:
+An Apache Kafka cluster with three ZooKeeper nodes and three Kafka brokers is up and running in the `kafka` namespace:
 
 ```shell
 kubectl get pods -n kafka
 NAME                                          READY     STATUS    RESTARTS   AGE
-my-cluster-entity-operator-7c5697d596-crhgw   3/3       Running   0          4m
-my-cluster-kafka-0                            2/2       Running   0          5m
-my-cluster-zookeeper-0                        2/2       Running   0          6m
-strimzi-cluster-operator-d5b6c6458-vx85b      1/1       Running   0          7m
+my-cluster-entity-operator-7c5697d596-z6tkg   3/3     Running   0          8s
+my-cluster-kafka-0                            2/2     Running   0          37s
+my-cluster-kafka-1                            2/2     Running   0          37s
+my-cluster-kafka-2                            2/2     Running   0          37s
+my-cluster-zookeeper-0                        2/2     Running   0          1m
+my-cluster-zookeeper-1                        2/2     Running   0          1m
+my-cluster-zookeeper-2                        2/2     Running   0          1m
+strimzi-cluster-operator-d5b6c6458-vx85b      1/1     Running   0          2m
 ```
 
 ## KEDA operator
