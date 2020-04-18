@@ -71,3 +71,36 @@ NAME                                    READY   STATUS    RESTARTS   AGE
 keda-metrics-apiserver-96766f49-qg27t   1/1     Running   0          5m
 keda-operator-884dfdccb-srhd4           1/1     Running   0          5m
 ```
+
+## Deploy Apache Kafka application
+
+Create the Kafka topic `my-topic` in the `kafka` namespace:
+
+```shell
+kubectl apply -f kafka-topic.yaml -n kafka
+```
+
+Deploy the Kafka consumer application which is currently scaled to 0:
+
+```shell
+kubectl apply -f kafka-consumer.yaml -n kafka
+```
+
+Deploy the KEDA scaled object:
+
+```shell
+kubectl apply -f kafka-scaledobject.yaml -n kafka
+```
+
+Deploy the Kafka producer application:
+
+```shell
+kubectl apply -f kafka-producer.yaml -n kafka
+```
+
+When the consumer sent more messages than the `lagThreshold` specified in the scaled object, KEDA does a scale from 0 to 1 so one Kafka consumer pod is started consuming messages.
+
+Increasce the frequency with which the Kafka producer sends messages from 1 sec to 10 msec.
+The KEDA operator will scale the number of pods for the Kafka consumer up to three, which is anyway the maximim because the number of partitions of the `my-topic` topic.
+
+

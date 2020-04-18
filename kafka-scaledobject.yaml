@@ -1,0 +1,18 @@
+apiVersion: keda.k8s.io/v1alpha1
+kind: ScaledObject
+metadata:
+  name: kafka-consumer-scaler
+  namespace: kafka
+  labels:
+    deploymentName: kafka-consumer
+spec:
+  scaleTargetRef:
+    deploymentName: kafka-consumer
+  cooldownPeriod: 120
+  triggers:
+  - type: kafka
+    metadata:
+      topic: my-topic
+      bootstrapServers: my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
+      consumerGroup: my-kafka-consumer-group
+      lagThreshold: '50'
