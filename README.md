@@ -102,9 +102,14 @@ Deploy the Kafka producer application:
 kubectl apply -f kafka-producer.yaml -n kafka
 ```
 
+## Auto scaling up and down
+
 When the consumer sent more messages than the `lagThreshold` specified in the scaled object, KEDA does a scale from 0 to 1 so one Kafka consumer pod is started consuming messages.
 
-Increasce the frequency with which the Kafka producer sends messages from 1 sec to 10 msec.
+Increasce the frequency with which the Kafka producer sends messages from 1 sec to 10 msec and increase the number of producer replicas to 5.
 The KEDA operator will scale the number of pods for the Kafka consumer up to three, which is anyway the maximim because the number of partitions of the `my-topic` topic.
+
+Slowing down the frequency of the Kafka producer and back to 1 sec delay, after a `coolingDown` period (which is 5 minutes by default), the KEDA operator will scale the Kafka consumer to just one pod as the beginning.
+Stopping the Kafka producer, the KEDA operator will scale the Kafka consumer to 0.
 
 
