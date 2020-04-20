@@ -56,11 +56,15 @@ strimzi-cluster-operator-d5b6c6458-vx85b      1/1     Running   0          2m
 Install the KEDA operator:
 
 ```shell
-git clone https://github.com/kedacore/keda && cd keda
+export KEDA_VERSION=1.4.0
+wget https://github.com/kedacore/keda/releases/download/v${KEDA_VERSION}/keda-${KEDA_VERSION}.tar.gz
+tar xzf keda-${KEDA_VERSION}.tar.gz
+rm keda-${KEDA_VERSION}.tar.gz
 
-kubectl apply -f deploy/crds/keda.k8s.io_scaledobjects_crd.yaml
-kubectl apply -f deploy/crds/keda.k8s.io_triggerauthentications_crd.yaml
-kubectl apply -f deploy/
+kubectl apply -f keda-${KEDA_VERSION}/crds
+kubectl apply -f keda-${KEDA_VERSION}/
+
+rm -rf keda-${KEDA_VERSION}
 ```
 
 The KEDA operator and the metrics apiserver is up and running in the `keda` namespace:
